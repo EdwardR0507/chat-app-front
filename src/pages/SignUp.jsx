@@ -20,7 +20,7 @@ const SignUp = () => {
         <div className="w-4/5 h-4/5">
           <h2 className="font-extrabold text-2xl">Create Account</h2>
           <p className="font-semibold mt-2">
-            Create a free acount to access the chat
+            Create a free account to access the chat
           </p>
           <form
             className="h-[90%] flex flex-col justify-evenly"
