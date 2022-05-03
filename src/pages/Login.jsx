@@ -1,10 +1,13 @@
-import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useContext, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 import { useForm } from "../hooks/useForm";
 import InputCheck from "../ui/InputCheck";
 import InputText from "../ui/InputText";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
   const [formValues, handleInputChange, reset] = useForm({
     email: "",
     password: "",
@@ -27,13 +30,21 @@ const Login = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const isComplete = () => {
+    return email.length > 0 && password.length > 0;
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     remember
       ? window.localStorage.setItem("remember", JSON.stringify(formValues))
       : window.localStorage.removeItem("remember");
-
-    console.log(formValues);
+    const ok = await login(email, password);
+    if (!ok) {
+      alert("Usuario o contraseña incorrectos");
+    } else {
+      navigate("/");
+    }
   };
   return (
     <article className=" min-h-screen flex justify-center items-center text-gray-800">
@@ -72,7 +83,9 @@ const Login = () => {
             <button
               type="submit"
               className="bg-[#397A96] w-full h-12 mt-2 flex justify-center items-center rounded-2xl shadow-inner text-white 
-            hover:bg-[#2F5A70] hover:text-white focus:outline-none"
+            hover:bg-[#2F5A70] hover:text-white focus:outline-none 
+            disabled:opacity-50 disabled:cursor-not-allowed"
+              disabled={!isComplete()}
             >
               Login
             </button>
