@@ -1,5 +1,5 @@
 import IncomingMessage from "./IncomingMessage";
-import InputBar from "./InputBar";
+import TextBar from "./TextBar";
 import OutgoingMessage from "./OutgoingMessage";
 
 const ChatContent = () => {
@@ -15,7 +15,7 @@ const ChatContent = () => {
           </div>
         </div>
 
-        <InputBar />
+        <TextBar />
       </div>
     </section>
   );

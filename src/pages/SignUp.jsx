@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useForm } from "../hooks/useForm";
 import InputText from "../ui/InputText";
 
@@ -60,6 +61,12 @@ const SignUp = () => {
             >
               Register
             </button>
+            <p className="text-center">
+              Already have an account?{" "}
+              <Link className="text-indigo-500 underline" to="/auth/login">
+                Login
+              </Link>
+            </p>
           </form>
         </div>
       </div>

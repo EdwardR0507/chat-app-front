@@ -1,16 +1,38 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "../hooks/useForm";
+import InputCheck from "../ui/InputCheck";
 import InputText from "../ui/InputText";
 
 const Login = () => {
   const [formValues, handleInputChange, reset] = useForm({
     email: "",
     password: "",
+    remember: false,
   });
-  const { email, password } = formValues;
+  const { email, password, remember } = formValues;
+
+  useEffect(() => {
+    const rememberData = localStorage.getItem("remember");
+    if (rememberData) {
+      const parsedRemember = JSON.parse(rememberData);
+      reset(parsedRemember);
+    }
+  }, []);
+
+  const toogleCheck = () => {
+    reset({
+      ...formValues,
+      remember: !remember,
+    });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    remember
+      ? window.localStorage.setItem("remember", JSON.stringify(formValues))
+      : window.localStorage.removeItem("remember");
+
     console.log(formValues);
   };
   return (
@@ -40,6 +62,12 @@ const Login = () => {
               onChange={handleInputChange}
               placeholder="Enter your password"
               required
+            />
+            <InputCheck
+              name="remember"
+              label="Remember me"
+              checked={remember}
+              onChange={toogleCheck}
             />
             <button
               type="submit"
