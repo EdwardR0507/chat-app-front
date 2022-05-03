@@ -5,14 +5,18 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
+import Spin from "../ui/Spin";
+
 const AuthRouter = lazy(() => import("./AuthRouter"));
+const Chat = lazy(() => import("../pages/Chat"));
 
 const AppRouter = () => {
   return (
     <Router>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<Spin />}>
         <Routes>
           <Route path="/auth/*" element={<AuthRouter />} />
+          <Route path="/" element={<Chat />} />
           <Route path="*" element={<Navigate to="/auth/login" />} />
         </Routes>
       </Suspense>

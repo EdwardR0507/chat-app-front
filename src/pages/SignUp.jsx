@@ -3,11 +3,11 @@ import InputText from "../ui/InputText";
 
 const SignUp = () => {
   const [formValues, handleInputChange, reset] = useForm({
-    username: "",
+    name: "",
     email: "",
     password: "",
   });
-  const { username, email, password } = formValues;
+  const { name, email, password } = formValues;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -15,8 +15,8 @@ const SignUp = () => {
   };
 
   return (
-    <article className=" min-h-screen flex justify-center items-center">
-      <div className="bg-sky-200 w-[90vw] h-[90vh] sm:w-[70vw] sm:h-[80vh]  rounded-lg border-2 border-slate-300 shadow-inner flex justify-center items-center">
+    <article className=" min-h-screen flex justify-center items-center text-gray-800">
+      <div className="bg-indigo-200 w-[90vw] h-[90vh] sm:w-[70vw] sm:h-[80vh]  rounded-lg border-2 border-slate-300 shadow-inner flex justify-center items-center">
         <div className="w-4/5 h-4/5">
           <h2 className="font-extrabold text-2xl">Create Account</h2>
           <p className="font-semibold mt-2">
@@ -36,12 +36,12 @@ const SignUp = () => {
               required
             />
             <InputText
-              label="Username"
-              name="username"
+              label="Name"
+              name="name"
               type="text"
-              value={username}
+              value={name}
               onChange={handleInputChange}
-              placeholder="Username"
+              placeholder="Enter yout name"
               required
             />
             <InputText
