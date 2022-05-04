@@ -39,9 +39,9 @@ const Login = () => {
     remember
       ? window.localStorage.setItem("remember", JSON.stringify(formValues))
       : window.localStorage.removeItem("remember");
-    const ok = await login(email, password);
-    if (!ok) {
-      alert("Usuario o contraseña incorrectos");
+    const response = await login(email, password);
+    if (!response.ok) {
+      alert(response.msg);
     } else {
       navigate("/");
     }

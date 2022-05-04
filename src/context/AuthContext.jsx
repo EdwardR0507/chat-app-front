@@ -27,11 +27,24 @@ export const AuthProvider = ({ children }) => {
       const { uid, name, email } = response.user;
       setAuth({ uid, check: false, logged: true, name, email });
     }
-    return response.ok;
+    return response;
   };
 
   const logout = () => {};
-  const signUp = (name, email, password) => {};
+
+  const signUp = async (name, email, password) => {
+    const response = await fetchWithoutToken(
+      "auth/new",
+      { name, email, password },
+      "POST"
+    );
+    if (response.ok) {
+      const { uid, name, email } = response.user;
+      setAuth({ uid, check: false, logged: true, name, email });
+    }
+    return response;
+  };
+
   const verifyToken = useCallback(() => {}, []);
 
   return (

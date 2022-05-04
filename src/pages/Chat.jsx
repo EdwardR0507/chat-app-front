@@ -11,8 +11,8 @@ const Chat = () => {
           <Avatar />
           <Inbox />
         </div>
-        {/* <ChatContent /> */}
-        <ChatSelect />
+        <ChatContent />
+        {/* <ChatSelect /> */}
       </div>
     </div>
   );

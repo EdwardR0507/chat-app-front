@@ -1,18 +1,31 @@
-import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 import { useForm } from "../hooks/useForm";
 import InputText from "../ui/InputText";
 
 const SignUp = () => {
-  const [formValues, handleInputChange, reset] = useForm({
+  const navigate = useNavigate();
+  const { signUp } = useContext(AuthContext);
+  const [formValues, handleInputChange] = useForm({
     name: "",
     email: "",
     password: "",
   });
   const { name, email, password } = formValues;
 
-  const handleSubmit = (e) => {
+  const isComplete = () => {
+    return name.length > 0 && email.length > 0 && password.length > 0;
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formValues);
+    const response = await signUp(name, email, password);
+    if (!response.ok) {
+      alert(response.msg);
+    } else {
+      navigate("/auth/login");
+    }
   };
 
   return (
@@ -57,7 +70,8 @@ const SignUp = () => {
             <button
               type="submit"
               className="bg-[#397A96] w-full h-12 mt-2 flex justify-center items-center rounded-2xl shadow-inner text-white 
-            hover:bg-[#2F5A70] hover:text-white focus:outline-none"
+            hover:bg-[#2F5A70] hover:text-white focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
+              disabled={!isComplete()}
             >
               Register
             </button>
