@@ -11,7 +11,7 @@ const initialState = {
 export const AuthContext = createContext();
 
 import React from "react";
-import { fetchWithoutToken } from "../helpers/fetch";
+import { fetchToken, fetchWithoutToken } from "../helpers/fetch";
 
 export const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState(initialState);
@@ -45,7 +45,35 @@ export const AuthProvider = ({ children }) => {
     return response;
   };
 
-  const verifyToken = useCallback(() => {}, []);
+  const verifyToken = useCallback(async () => {
+    const token = window.localStorage.getItem("token");
+    if (!token) {
+      setAuth({
+        uid: null,
+        check: false,
+        logged: false,
+        name: null,
+        email: null,
+      });
+      return false;
+    }
+    const response = await fetchToken("auth/revalidation");
+    if (response.ok) {
+      window.localStorage.setItem("token", response.token);
+      const { uid, name, email } = response.user;
+      setAuth({ uid, check: false, logged: true, name, email });
+      return true;
+    } else {
+      setAuth({
+        uid: null,
+        check: false,
+        logged: false,
+        name: null,
+        email: null,
+      });
+      return false;
+    }
+  }, []);
 
   return (
     <AuthContext.Provider
