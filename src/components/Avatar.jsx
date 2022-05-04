@@ -1,4 +1,11 @@
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
+
 const Avatar = () => {
+  const {
+    auth: { name },
+    logout,
+  } = useContext(AuthContext);
   return (
     <article className="flex flex-col items-center bg-indigo-100 border border-gray-200 mt-4 w-full py-6 px-4 rounded-lg">
       <div className="h-20 w-20 rounded-full border overflow-hidden">
@@ -8,7 +15,7 @@ const Avatar = () => {
           className="h-full w-full"
         />
       </div>
-      <p className="text-sm font-semibold mt-2">Edward Ramos</p>
+      <p className="text-sm font-semibold mt-2">{name}</p>
       <span className="text-sm tracking-wide flex items-center space-x-1">
         <svg
           className="h-4"
@@ -28,6 +35,12 @@ const Avatar = () => {
         </svg>
         <span className="text-gray-600">Online</span>
       </span>
+      <button
+        className="flex flex-row items-center hover:bg-gray-100 rounded-xl p-2 mt-2 text-sm bg-white text-red-500 focus:outline-none"
+        onClick={logout}
+      >
+        Log Out
+      </button>
     </article>
   );
 };

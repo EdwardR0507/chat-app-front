@@ -30,7 +30,13 @@ export const AuthProvider = ({ children }) => {
     return response;
   };
 
-  const logout = () => {};
+  const logout = () => {
+    window.localStorage.removeItem("token");
+    setAuth({
+      check: false,
+      logged: false,
+    });
+  };
 
   const signUp = async (name, email, password) => {
     const response = await fetchWithoutToken(
