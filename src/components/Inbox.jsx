@@ -1,6 +1,17 @@
+import { useContext } from "react";
+import { ChatContext } from "../context/ChatContext";
 import ChatRow from "../components/ChatRow";
+import { AuthContext } from "../context/AuthContext";
 
 const Inbox = () => {
+  const {
+    chatState: { users },
+  } = useContext(ChatContext);
+
+  const {
+    auth: { uid },
+  } = useContext(AuthContext);
+
   return (
     <div className="flex flex-col mt-8 h-1/2">
       <div className="flex flex-row items-center justify-between text-xs">
@@ -10,15 +21,11 @@ const Inbox = () => {
         </span>
       </div>
       <div className="flex flex-col space-y-1 mt-4 -mx-2 overflow-y-auto">
-        <ChatRow />
-        <ChatRow />
-        <ChatRow />
-        <ChatRow />
-        <ChatRow />
-        <ChatRow />
-        <ChatRow />
-        <ChatRow />
-        <ChatRow />
+        {users
+          .filter((user) => user.uid !== uid)
+          .map((user) => (
+            <ChatRow key={user.uid} user={user} />
+          ))}
       </div>
     </div>
   );
