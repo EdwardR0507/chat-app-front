@@ -33,6 +33,12 @@ export const SocketProvider = ({ children }) => {
     });
   }, [socket, dispatch]);
 
+  useEffect(() => {
+    socket?.on("message", (message) => {
+      dispatch({ type: types.NEW_MESSAGE, payload: message });
+    });
+  }, [socket, dispatch]);
+
   return (
     <SocketContext.Provider
       value={{

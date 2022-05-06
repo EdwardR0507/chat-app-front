@@ -28,7 +28,7 @@ const InputBar = () => {
       return;
     }
     handleEmit();
-    console.log(message);
+    setMessage("");
   };
 
   return (

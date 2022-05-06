@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { ChatContext } from "../context/ChatContext";
+import { fetchToken } from "../helpers/fetch";
 import { types } from "../types/types";
 
 const ChatRow = ({ user }) => {
@@ -10,10 +11,16 @@ const ChatRow = ({ user }) => {
     dispatch,
   } = useContext(ChatContext);
 
-  const handleClick = () => {
+  const handleClick = async () => {
     dispatch({
       type: types.ACTIVATE_CHAT,
       payload: uid,
+    });
+    const response = await fetchToken(`messages/${uid}`);
+    const messages = response.data;
+    dispatch({
+      type: types.LOAD_MESSAGES,
+      payload: messages,
     });
   };
 
@@ -29,7 +36,7 @@ const ChatRow = ({ user }) => {
         <img
           className="flex items-center justify-center h-8 w-8 rounded-full"
           src="https://png.pngtree.com/png-clipart/20190924/original/pngtree-businessman-user-avatar-free-vector-png-image_4827807.jpg"
-          alt="James Bhatta"
+          alt="User"
         />
 
         <p className="ml-2 text-sm font-semibold">{name}</p>
