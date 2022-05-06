@@ -1,7 +1,30 @@
+import { useContext } from "react";
+import { ChatContext } from "../context/ChatContext";
+import { types } from "../types/types";
+
 const ChatRow = ({ user }) => {
-  const { name, online } = user;
+  const { name, online, uid } = user;
+
+  const {
+    chatState: { activeChat },
+    dispatch,
+  } = useContext(ChatContext);
+
+  const handleClick = () => {
+    dispatch({
+      type: types.ACTIVATE_CHAT,
+      payload: uid,
+    });
+  };
+
   return (
-    <button className="flex flex-row items-center  justify-between first-line:hover:bg-gray-100 rounded-xl p-2">
+    <button
+      className={`flex flex-row items-center  justify-between first-line:hover:bg-gray-100 rounded-xl p-2 
+      hover:bg-gray-100 ${
+        activeChat === uid && "bg-gray-200 hover:bg-gray-200"
+      }`}
+      onClick={handleClick}
+    >
       <div className="flex flex-row items-center">
         <img
           className="flex items-center justify-center h-8 w-8 rounded-full"

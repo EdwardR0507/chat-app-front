@@ -46,7 +46,7 @@ export const AuthProvider = ({ children }) => {
     );
     if (response.ok) {
       const { uid, name, email } = response.user;
-      setAuth({ uid, check: false, logged: true, name, email });
+      setAuth({ uid, check: false, logged: false, name, email });
     }
     return response;
   };
