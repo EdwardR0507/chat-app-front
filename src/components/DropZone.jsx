@@ -37,7 +37,7 @@ const DropZone = ({ handleEmit, setOpen }) => {
       key={file.name}
       src={file.preview}
       alt="image"
-      className="m-2 rounded-lg border border-gray-300 min-h-full"
+      className="rounded-lg max-w-full h-auto"
     />
   ));
 
@@ -69,9 +69,12 @@ const DropZone = ({ handleEmit, setOpen }) => {
         >
           {images.length > 0 ? (
             <>
-              <div className="w-60 h-60">{images}</div>
-              <div className="flex flex-row justify-evenly w-4/5 mt-6">
-                <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg">
+              <div className="w-60 h-auto">{images}</div>
+              <div className="flex flex-row justify-evenly items-center w-full mt-8">
+                <button
+                  className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg"
+                  onClick={() => setFiles([])}
+                >
                   Cancel
                 </button>
                 <button
@@ -86,7 +89,7 @@ const DropZone = ({ handleEmit, setOpen }) => {
             <>
               <input {...getInputProps()} />
               <p className="text-center text-gray-600 text-sm font-semibold">
-                Drag and drop some files here, or click to select files
+                Drag and drop some image here, or click to select one
               </p>
             </>
           )}
