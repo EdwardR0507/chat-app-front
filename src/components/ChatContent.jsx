@@ -46,7 +46,6 @@ const ChatContent = () => {
             )}
           </div>
         </div>
-
         <TextBar />
       </div>
     </section>

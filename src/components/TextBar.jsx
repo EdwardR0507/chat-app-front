@@ -3,8 +3,11 @@ import InputEmoji from "react-input-emoji";
 import { AuthContext } from "../context/AuthContext";
 import { ChatContext } from "../context/ChatContext";
 import { SocketContext } from "../context/SocketContext";
+import DropZone from "./DropZone";
+import Modal from "./Modal";
 
 const InputBar = () => {
+  const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
   const { socket } = useContext(SocketContext);
   const {
@@ -14,7 +17,7 @@ const InputBar = () => {
     chatState: { activeChat },
   } = useContext(ChatContext);
 
-  const handleEmit = () => {
+  const handleEmit = (uid, activeChat, message) => {
     socket.emit("message", {
       from: uid,
       to: activeChat,
@@ -24,10 +27,10 @@ const InputBar = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (message.length === 0) {
+    if (message.trim().length === 0) {
       return;
     }
-    handleEmit();
+    handleEmit(uid, activeChat, message);
     setMessage("");
   };
 
@@ -37,7 +40,12 @@ const InputBar = () => {
       onSubmit={handleSubmit}
     >
       <div>
-        <button className="flex items-center justify-center text-gray-400 hover:text-gray-600">
+        <button
+          className="flex items-center justify-center text-gray-400 hover:text-gray-600"
+          onClick={() => {
+            setOpen(true);
+          }}
+        >
           <svg
             className="w-5 h-5"
             fill="none"
@@ -53,6 +61,13 @@ const InputBar = () => {
             ></path>
           </svg>
         </button>
+        <Modal open={open} setOpen={setOpen}>
+          <DropZone
+            setMessage={setMessage}
+            setOpen={setOpen}
+            handleEmit={handleEmit}
+          />
+        </Modal>
       </div>
       <div className="flex-grow ml-4">
         <div className="relative w-full">
@@ -60,7 +75,9 @@ const InputBar = () => {
             value={message}
             onChange={setMessage}
             theme="light"
-            onEnter={handleEmit}
+            onEnter={() => {
+              handleEmit(uid, activeChat, message);
+            }}
             cleanOnEnter
             placeholder="Type a message"
           />

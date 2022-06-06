@@ -2,6 +2,8 @@ import { hourMonth } from "../helpers/dates";
 
 const IncomingMessage = ({ msg }) => {
   const { createdAt, message } = msg;
+  const isImage = message.includes(`${import.meta.env.VITE_CLOUD_NAME}`);
+
   return (
     <div className="col-start-1 col-end-8 p-3 rounded-lg">
       <div className="flex flex-col">
@@ -12,7 +14,13 @@ const IncomingMessage = ({ msg }) => {
             alt="User"
           />
           <div className="ml-3 text-sm bg-white py-2 px-4 shadow rounded-xl">
-            <p>{message}</p>
+            {isImage ? (
+              <div className="w-52">
+                <img src={message} alt="image" className="w-full h-auto" />
+              </div>
+            ) : (
+              <p>{message}</p>
+            )}
           </div>
         </div>
         <span className=" mt-1 text-sm text-gray-500">
