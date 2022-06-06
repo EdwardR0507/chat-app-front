@@ -1,4 +1,9 @@
 import { createContext, useCallback, useContext, useState } from "react";
+import { fetchToken, fetchWithoutToken } from "../helpers/fetch";
+import { ChatContext } from "./ChatContext";
+import { types } from "../types/types";
+
+export const AuthContext = createContext();
 
 const initialState = {
   uid: null,
@@ -7,13 +12,6 @@ const initialState = {
   name: "",
   email: "",
 };
-
-export const AuthContext = createContext();
-
-import React from "react";
-import { fetchToken, fetchWithoutToken } from "../helpers/fetch";
-import { ChatContext } from "./ChatContext";
-import { types } from "../types/types";
 
 export const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState(initialState);

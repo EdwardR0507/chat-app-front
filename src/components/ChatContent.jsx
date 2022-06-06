@@ -26,16 +26,24 @@ const ChatContent = () => {
       <div className="flex flex-col flex-auto flex-shrink-0 rounded-2xl bg-gray-100 h-full p-4">
         <div className="flex flex-col h-full overflow-x-auto mb-4">
           <div className="flex flex-col h-full">
-            <div className="grid grid-cols-12 gap-y-2" id="msgs">
-              {messages.map((message) =>
-                message.from === auth.uid ? (
-                  <OutgoingMessage key={message._id} msg={message} />
-                ) : (
-                  <IncomingMessage key={message._id} msg={message} />
-                )
-              )}
-              <div ref={endRef}></div>
-            </div>
+            {messages.length > 0 ? (
+              <div className="grid grid-cols-12 gap-y-2" id="msgs">
+                {messages.map((message) =>
+                  message.from === auth.uid ? (
+                    <OutgoingMessage key={message._id} msg={message} />
+                  ) : (
+                    <IncomingMessage key={message._id} msg={message} />
+                  )
+                )}
+                <div ref={endRef}></div>
+              </div>
+            ) : (
+              <div className="flex flex-col h-full justify-center  items-center">
+                <span className="font-bold text-2xl text-gray-800">
+                  Start a conversation by typing a message...
+                </span>
+              </div>
+            )}
           </div>
         </div>
 
